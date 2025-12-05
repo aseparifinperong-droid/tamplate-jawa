@@ -142,7 +142,7 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 <div class="petals"></div>
 
 <!-- 🎵 MUSIK (dengan autoplay fix) -->
-<audio id="bgmusic" src="https://www.dropbox.com/scl/fi/eckjv0s31i47v9np7skda/Janji-Suci.mp3?rlkey=6nurwhsrzwov50grd5etv1bki&st=1kun7qvt&raw=1" autoplay loop muted></audio>
+<audio id="bgmusic" src="https://www.dropbox.com/scl/fi/eckjv0s31i47v9np7skda/Janji-Suci.mp3?rlkey=6nurwhsrzwov50grd5etv1bki&st=1kun7qvt&raw=1" loop></audio>
 
 <div class="ornaments"></div>
 
@@ -251,24 +251,12 @@ Hormat kami,<br>
 window.onload = () => {
     setTimeout(()=>{document.getElementById("loadingScreen").style.display="none";},1500);
 
-    const music = document.getElementById('bgmusic');
+    const music = document.getElementById("bgmusic");
+    const openBtn = document.getElementById("openInvite");
 
-    /* === AUTOPLAY FIX 1 — muted autoplay (wajib) === */
-    music.muted = true;
-    music.play().then(()=>{
-        setTimeout(()=> music.muted = false, 500);
+    openBtn.addEventListener("click", () => {
+    music.play().catch(()=>{});
     });
-
-    /* === AUTOPLAY FIX 2 — play saat klik pertama === */
-    document.addEventListener("click", () => {
-        if (music.paused) music.play();
-    }, { once: true });
-
-    /* === AUTOPLAY FIX 3 — play saat scroll pertama === */
-    document.addEventListener("scroll", () => {
-        if (music.paused) music.play();
-    }, { once: true });
-
     // START AOS
     AOS.init({duration:1000,once:true});
 
@@ -339,3 +327,4 @@ window.onload = () => {
 
 </body>
 </html>
+
