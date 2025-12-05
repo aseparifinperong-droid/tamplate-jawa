@@ -1,252 +1,111 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Undangan Adat Jawa – Rani & Dimas</title>
 
 <!-- AOS Animation -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=Marcellus&display=swap" rel="stylesheet">
 
 <!-- QR Code Library -->
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
 <style>
-/* =================== GLOBAL STYLE =================== */
-
+/* ---------- GENERAL ---------- */
 body {
-    margin: 0;
-    background: #f8f3ea;
-    font-family: 'Marcellus', serif;
-    color: #4a3b2b;
-    overflow-x: hidden;
+    margin:0; font-family: 'Marcellus', serif; color:#4a3b2b; background:#f8f3ea; overflow-x:hidden;
+    transition: all 0.5s ease;
 }
-
-/* DARK MODE */
+section{
+    padding:80px 20px; text-align:center; position:relative; min-height:400px;
+    transition: all 0.5s ease;
+}
+section::before{
+    content:""; position:absolute; top:0; left:0; width:100%; height:100%; backdrop-filter:blur(4px);
+    background:rgba(0,0,0,0.35); z-index:-1; transition: all 0.5s ease;
+}
+h1,h2,h3,p{transition: all 0.5s ease;}
+.card, .btn-buka, .guestbook input, .guestbook textarea{transition: all 0.5s ease;}
+.gallery-slider .slide{transition: opacity 1s ease-in-out;}
+/* ---------- DARK MODE ---------- */
 .dark-mode {
-    background: #1a120b !important;
-    color: #e8d6b8 !important;
+    background:#1a120b !important;
+    color:#e8d6b8 !important;
 }
-.dark-mode h2, .dark-mode h3 { color: #e2c083 !important; }
-.dark-mode .card { background: #2b1d12 !important; border-color: #b48a50 !important; }
+.dark-mode h1,h2,h3,p{color:#e8d6b8 !important;}
+.dark-mode section::before{background:rgba(0,0,0,0.6);}
+.dark-mode .card{background:#3b2715;border-color:#e2c083;color:#e8d6b8;}
+.dark-mode .btn-buka{background:#e2c083;color:#1a120b;border-color:#f7e7ce;}
+.dark-mode .guestbook input,.dark-mode .guestbook textarea{background:#50351c;color:#e8d6b8;border:1px solid #e2c083;}
+.dark-mode .guestbook button{background:#e2c083;color:#1a120b;}
+.dark-mode .menu-bottom{background:rgba(26,18,11,0.95);}
+.dark-mode .petals{opacity:0.7;}
+/* ---------- LOADING ---------- */
+#loadingScreen{
+    position:fixed; top:0; left:0; width:100%; height:100%; background:#3b2715;
+    display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:10000; color:#e8d6b8;
+}
+.loading-logo{width:180px; opacity:.8; animation:spin 5s infinite linear;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 
-/* Dark mode toggle */
-.dark-toggle {
-    position: fixed;
-    bottom: 120px;
-    right: 20px;
-    width: 55px; height: 55px;
-    background: #50351c;
-    border-radius: 50%;
-    color: #f7e7ce;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    z-index: 9999;
-    font-size: 22px;
+/* ---------- MENU BOTTOM ---------- */
+.menu-bottom{
+    position:fixed; bottom:0; left:0; right:0; background:rgba(80,53,28,0.95);
+    backdrop-filter:blur(8px); padding:8px 5px; display:flex; justify-content:space-around; z-index:9999;
+    border-top:2px solid #c9a063; transition: all 0.5s ease;
 }
+.menu-item i{width:26px;height:26px;color:#f7e7ce;}
+.menu-item:hover i{color:#e5c37a;}
 
-/* =================== LOADING SCREEN =================== */
-#loadingScreen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #3b2715;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    z-index: 10000;
-    color: #e8d6b8;
-}
-.loading-logo {
-    width: 180px;
-    opacity: .8;
-    animation: spin 5s infinite linear;
-}
-@keyframes spin {
-    from { transform: rotate(0); }
-    to { transform: rotate(360deg); }
-}
+/* ---------- BUTTONS ---------- */
+.dark-toggle{position:fixed; bottom:120px; right:20px; width:55px;height:55px; background:#50351c; border-radius:50%; color:#f7e7ce; display:flex;align-items:center;justify-content:center; cursor:pointer; z-index:9999;font-size:22px;}
+.music-btn{position:fixed;left:20px;bottom:120px;background:#50351c;width:55px;height:55px;border-radius:50%;color:#f7e7ce;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;font-size:22px;}
+.btn-buka{margin-top:25px;padding:14px 28px;background:#f7e7ce;color:#50351c;border-radius:30px;border:2px solid #c9a063;font-weight:bold;text-decoration:none;transition:all 0.3s;}
+.btn-buka:hover{background:#c9a063;color:#fff;}
 
-/* =================== MENU BAWAH IKON =================== */
-.menu-bottom {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: rgba(80,53,28,0.95);
-    backdrop-filter: blur(8px);
-    padding: 8px 5px;
-    display: flex; justify-content: space-around;
-    z-index: 9999;
-    border-top: 2px solid #c9a063;
-}
+/* ---------- MEMPELAI ---------- */
+.mempelai{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;}
+.card{width:250px;background:#fff7ef;padding:20px;border-radius:15px;border:2px solid #c9a063;box-shadow:0 4px 20px rgba(0,0,0,.2);}
+.card img{width:100%;border-radius:12px;border:3px solid #c9a063;}
 
-.menu-item i {
-    width: 26px;
-    height: 26px;
-    stroke-width: 2.3px;
-    color: #f7e7ce;
-}
-.menu-item:hover i { color: #e5c37a; }
+/* ---------- GALERI ---------- */
+.gallery-slider{position:relative;width:90%;max-width:600px;margin:50px auto;height:350px;overflow:hidden;border-radius:15px;}
+.gallery-slider .slide{position:absolute;top:50%;left:50%;width:100%;height:100%;object-fit:cover;transform:translate(-50%,-50%);opacity:0;}
+.gallery-slider .slide.active{opacity:1;}
 
-.dark-mode .menu-bottom { background: rgba(26,18,11,0.95); }
+/* ---------- MAPS & VIDEO ---------- */
+.maps iframe,.video iframe{width:90%;border-radius:15px;border:3px solid #c9a063;}
+.maps iframe{height:350px;}
+.video iframe{height:300px;}
 
-/* =================== SECTION =================== */
-section {
-    padding: 80px 20px;
-    text-align: center;
-    position: relative;
-}
+/* ---------- GUESTBOOK ---------- */
+.guestbook input,.guestbook textarea{width:80%;padding:10px;margin:5px;border-radius:10px;border:1px solid #c9a063;}
+.guestbook button{padding:12px 20px;background:#50351c;border-radius:8px;border:none;color:#f7e7ce;cursor:pointer;}
+.messages div{background:#fff7ef;border:2px solid #c9a063;padding:10px;margin:8px 0;border-radius:12px;}
 
-/* Background dengan blur */
-section::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    backdrop-filter: blur(4px);
-    background: rgba(0,0,0,0.35);
-    z-index: -1;
-}
+/* ---------- PETALS ---------- */
+.petals{position:fixed;pointer-events:none;top:0;left:0;width:100%;height:100%;z-index:1;}
+.petal{position:absolute;width:25px;height:25px;background-image:url('img/kembang.png');background-size:cover;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-10%) rotate(0deg);}100%{transform:translateY(120%) rotate(360deg);}}
 
-/* Background foto */
-#cover { background: url('img/bg-cover.jpg') center/cover no-repeat; }
-#undangan { background: url('img/bg-undangan.jpg') center/cover no-repeat; }
-#mempelai { background: url('img/bg-mempelai.jpg') center/cover no-repeat; }
-#acara { background: url('img/bg-acara.jpg') center/cover no-repeat; }
-#lokasi { background: url('img/bg-lokasi.jpg') center/cover no-repeat; }
-#galeri { background: url('img/bg-galeri.jpg') center/cover no-repeat; }
-#video { background: url('img/bg-video.jpg') center/cover no-repeat; }
-#hadiah { background: url('img/bg-hadiah.jpg') center/cover no-repeat; }
-#ucapan { background: url('img/bg-ucapan.jpg') center/cover no-repeat; }
-#penutup { background: url('img/bg-penutup.jpg') center/cover no-repeat; }
-
-/* Tombol Buka Undangan */
-.btn-buka {
-    margin-top: 25px;
-    padding: 14px 28px;
-    background: #f7e7ce;
-    color: #50351c;
-    border-radius: 30px;
-    border: 2px solid #c9a063;
-    font-weight: bold;
-    text-decoration: none;
-    transition: 0.3s;
-}
-.btn-buka:hover {
-    background: #c9a063;
-    color: #fff;
-}
-
-/* =================== MEMPELAI =================== */
-.mempelai {
-    display: flex; flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-}
-.card {
-    width: 250px;
-    background: #fff7ef;
-    padding: 20px;
-    border-radius: 15px;
-    border: 2px solid #c9a063;
-    box-shadow: 0 4px 20px rgba(0,0,0,.2);
-}
-.card img {
-    width: 100%;
-    border-radius: 12px;
-    border: 3px solid #c9a063;
-}
-
-/* =================== GALERI =================== */
-.gallery img {
-    width: 30%;
-    border-radius: 10px;
-    border: 2px solid #c9a063;
-    margin: 5px;
-}
-
-/* MAP */
-.maps iframe {
-    width: 90%; height: 350px;
-    border-radius: 15px; border: 3px solid #c9a063;
-}
-
-/* VIDEO */
-.video iframe {
-    width: 90%; height: 300px;
-    border-radius: 15px; border: 3px solid #c9a063;
-}
-
-/* =================== Guestbook =================== */
-.guestbook input, .guestbook textarea {
-    width: 80%; padding: 10px;
-    margin: 5px;
-    border-radius: 10px;
-    border: 1px solid #c9a063;
-}
-.guestbook button {
-    padding: 12px 20px;
-    background: #50351c;
-    border-radius: 8px;
-    border: none;
-    color: #f7e7ce;
-    cursor: pointer;
-}
-.messages div {
-    background: #fff7ef;
-    border: 2px solid #c9a063;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 12px;
-}
-
-/* =================== MUSIC BUTTON =================== */
-.music-btn {
-    position: fixed;
-    left: 20px; bottom: 120px;
-    background: #50351c;
-    width: 55px; height: 55px;
-    border-radius: 50%;
-    color: #f7e7ce;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 9999;
-    font-size: 22px;
-}
-
-/* ================== PETALS ================== */
-.petals { 
-    position: fixed;
-    pointer-events: none;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 1;
-}
-.petal {
-    position: absolute;
-    width: 25px; height: 25px;
-    background-image: url('img/kembang.png');
-    background-size: cover;
-    animation: fall linear infinite;
-}
-@keyframes fall {
-    0% { transform: translateY(-10%) rotate(0deg); }
-    100% { transform: translateY(120%) rotate(360deg); }
-}
+/* ---------- ORNAMENT ---------- */
+.ornaments{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5;}
+.ornament{position:absolute;width:80px;opacity:.7;animation:waveY 3s ease-in-out infinite alternate;}
+@keyframes waveY{0% { transform: translateY(0); }50% { transform: translateY(20px); }100% { transform: translateY(0); }}
 </style>
-
 </head>
 
 <body>
 
-<!-- LOADING -->
+<!-- LOADING SCREEN -->
 <div id="loadingScreen">
     <img class="loading-logo" src="img/astagina.png">
     <p>Matur Nuwun, sekedap nggih...</p>
 </div>
 
-<!-- MENU BAWAH -->
+<!-- MENU & BUTTON -->
 <div class="menu-bottom">
     <a href="#cover" class="menu-item"><i data-feather="home"></i></a>
     <a href="#undangan"><i data-feather="book-open"></i></a>
@@ -259,187 +118,193 @@ section::before {
     <a href="#ucapan"><i data-feather="message-circle"></i></a>
 </div>
 
-<!-- DARK MODE -->
 <div class="dark-toggle" onclick="toggleDark()">🌙</div>
-
-<!-- MUSIC -->
 <div class="music-btn" onclick="toggleMusic()">🎶</div>
-
 <div class="petals"></div>
 <audio id="bgmusic" src="music/gending.mp3" autoplay loop></audio>
-
+<div class="ornaments"></div>
 
 <!-- COVER -->
-<section id="cover" data-aos="zoom-in">
-
-    <h3 style="font-weight:300; font-size:20px; margin-bottom:10px;">
-        Dengan hormat, kami mengundang Bapak/Ibu/Saudara/i
-    </h3>
-
-    <h1>Rani & Dimas</h1>
-    <p style="margin-top:-10px;">Pernikahan Adat Jawa</p>
-    <p>12 Desember 2025</p>
-
-    <a href="#undangan" class="btn-buka">Buka Undangan</a>
+<section id="cover" data-aos="zoom-in" style="background-image:url('img/bg-cover1.jpg'); background-size:cover; background-position:center;">
+<h3 style="font-weight:300;font-size:20px;margin-bottom:10px;">Dengan hormat, kami mengundang Bapak/Ibu/Saudara/i</h3>
+<h1>Rani & Dimas</h1>
+<p style="margin-top:-10px;">Pernikahan Adat Jawa</p>
+<p>12 Desember 2025</p>
+<a href="#undangan" class="btn-buka">Buka Undangan</a>
 </section>
-
 
 <!-- UNDANGAN -->
 <section id="undangan" data-aos="fade-up">
-    <h2>Assalamu’alaikum</h2>
-    <p>Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu untuk hadir dalam pernikahan kami.</p>
+<h2>Assalamu’alaikum</h2>
+<p>Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu untuk hadir dalam pernikahan kami.</p>
 </section>
-
 
 <!-- MEMPELAI -->
 <section id="mempelai">
-    <h2>Mempelai</h2>
-    <div class="mempelai">
-        <div class="card" data-aos="fade-right">
-            <img src="img/mempelai-wanita.jpg">
-            <h3>Rani Putri</h3>
-            <p>Putri dari Bpk. Ahmad & Ibu Siti</p>
-        </div>
-        <div class="card" data-aos="fade-left">
-            <img src="img/mempelai-pria.jpg">
-            <h3>Dimas Pratama</h3>
-            <p>Putra dari Bpk. Budi & Ibu Lestari</p>
-        </div>
+<h2>Mempelai</h2>
+<div class="mempelai">
+    <div class="card" data-aos="fade-right">
+        <img src="img/mempelai-wanita.jpg">
+        <h3>Rani Putri</h3>
+        <p>Putri dari Bpk. Ahmad & Ibu Siti</p>
     </div>
+    <div class="card" data-aos="fade-left">
+        <img src="img/mempelai-pria.jpg">
+        <h3>Dimas Pratama</h3>
+        <p>Putra dari Bpk. Budi & Ibu Lestari</p>
+    </div>
+</div>
 </section>
-
 
 <!-- ACARA -->
 <section id="acara" data-aos="fade-up">
-    <h2>Detail Acara</h2>
-    <h3>Akad Nikah</h3>
-    <p>Sabtu, 12 Desember 2025 — 08.00 WIB</p>
-    <h3>Resepsi</h3>
-    <p>Sabtu, 12 Desember 2025 — 11.00–17.00 WIB</p>
+<h2>Detail Acara</h2>
+<h3>Akad Nikah</h3>
+<p>Sabtu, 12 Desember 2025 — 08.00 WIB</p>
+<h3>Resepsi</h3>
+<p>Sabtu, 12 Desember 2025 — 11.00–17.00 WIB</p>
 </section>
-
 
 <!-- LOKASI -->
 <section id="lokasi" data-aos="fade-up">
-    <h2>Lokasi Acara</h2>
-    <div class="maps">
-        <iframe src="https://www.google.com/maps/embed?pb=YOUR-MAPS"></iframe>
-    </div>
+<h2>Lokasi Acara</h2>
+<div class="maps">
+<iframe src="https://www.google.com/maps/embed?pb=YOUR-MAPS" allowfullscreen></iframe>
+</div>
 </section>
-
 
 <!-- GALERI -->
 <section id="galeri" data-aos="fade-up">
-    <h2>Galeri Prewedding</h2>
-    <div class="gallery">
-        <img src="img/prewed1.jpg">
-        <img src="img/prewed2.jpg">
-        <img src="img/prewed3.jpg">
-    </div>
+<h2>Galeri Prewedding</h2>
+<div class="gallery-slider">
+    <img src="img/prewed1.jpg" class="slide active">
+    <img src="img/prewed2.jpg" class="slide">
+    <img src="img/prewed3.jpg" class="slide">
+</div>
 </section>
-
 
 <!-- VIDEO -->
 <section id="video" data-aos="fade-up">
-    <h2>Video Prewedding</h2>
-    <div class="video">
-        <iframe src="https://www.youtube.com/embed/YOURVIDEO"></iframe>
-    </div>
+<h2>Video Prewedding</h2>
+<div class="video">
+<iframe src="https://www.youtube.com/embed/YOURVIDEO?autoplay=1&mute=1" allow="autoplay" allowfullscreen></iframe>
+</div>
 </section>
-
 
 <!-- HADIAH -->
 <section id="hadiah" data-aos="fade-up">
-    <h2>Kirim Hadiah</h2>
-    <p>BCA — 1234567890 a/n Rani Putri</p>
-    <div id="qrcode"></div>
+<h2>Kirim Hadiah</h2>
+<p>BCA — 1234567890 a/n Rani Putri</p>
+<div id="qrcode"></div>
 </section>
-
 
 <!-- UCAPAN -->
 <section id="ucapan" data-aos="fade-up">
-    <h2>Ucapan & Doa</h2>
-    <div class="guestbook">
-        <input id="nama" placeholder="Nama Anda">
-        <textarea id="pesan" rows="3" placeholder="Tulis ucapan..."></textarea>
-        <button onclick="kirimUcapan()">Kirim</button>
-    </div>
-    <div id="messages" class="messages"></div>
+<h2>Ucapan & Doa</h2>
+<div class="guestbook">
+<input id="nama" placeholder="Nama Anda">
+<textarea id="pesan" rows="3" placeholder="Tulis ucapan..."></textarea>
+<button onclick="kirimUcapan()">Kirim</button>
+</div>
+<div id="messages" class="messages"></div>
 </section>
-
 
 <!-- PENUTUP -->
 <section id="penutup" data-aos="fade-up">
-    <h2>Terima Kasih</h2>
-    <p>
-        Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i  
-        berkenan hadir dan memberikan doa restu untuk pernikahan kami.  
-        <br><br>
-        Hormat kami,<br>
-        <b>Rani & Dimas</b>
-    </p>
+<h2>Terima Kasih</h2>
+<p>
+Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i  
+berkenan hadir dan memberikan doa restu untuk pernikahan kami.<br><br>
+Hormat kami,<br>
+<b>Rani & Dimas</b>
+</p>
 </section>
 
-
-<!-- Feather Icons -->
 <script src="https://unpkg.com/feather-icons"></script>
-<script> feather.replace(); </script>
-
-<!-- AOS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>feather.replace();</script>
 
 <script>
-// LOADING
+// ---------- ON LOAD ----------
 window.onload = () => {
-    setTimeout(() => {
-        const load = document.getElementById("loadingScreen");
-        load.style.opacity = "0";
-        setTimeout(() => load.style.display = "none", 600);
-    }, 1500);
-};
+setTimeout(()=>{
+    document.getElementById("loadingScreen").style.display="none";
+},1500);
 
-// DARK MODE
-function toggleDark() { document.body.classList.toggle("dark-mode"); }
+// MUSIK AUTOPLAY
+const music = document.getElementById('bgmusic');
+music.play().catch(()=>console.log("Autoplay diblokir"));
 
-// MUSIC
-function toggleMusic() {
-    const m = document.getElementById("bgmusic");
-    m.paused ? m.play() : m.pause();
-}
+// START AOS
+AOS.init({duration:1000,once:true});
 
-// PETALS
-function createPetal() {
-    const p = document.createElement("div");
+// Background slider
+const coverImages=['img/bg-cover1.jpg','img/bg-cover2.jpg','img/bg-cover3.jpg'];
+let coverIndex=0;
+const coverSection=document.getElementById('cover');
+setInterval(()=>{
+    coverIndex=(coverIndex+1)%coverImages.length;
+    coverSection.style.backgroundImage=`url(${coverImages[coverIndex]})`;
+},5000);
+
+// Galeri slider
+let slides=document.querySelectorAll('.gallery-slider .slide');
+let currentSlide=0;
+setInterval(()=>{
+    slides[currentSlide].classList.remove('active');
+    currentSlide=(currentSlide+1)%slides.length;
+    slides[currentSlide].classList.add('active');
+},4000);
+
+// Petals
+function createPetal(){
+    const p=document.createElement("div");
     p.classList.add("petal");
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (Math.random() * 4 + 4) + "s";
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(Math.random()*4+4)+'s';
     document.querySelector(".petals").appendChild(p);
-    setTimeout(() => p.remove(), 8000);
+    setTimeout(()=>p.remove(),8000);
 }
-setInterval(createPetal, 500);
+setInterval(createPetal,500);
 
 // UCAPAN
-function kirimUcapan() {
-    const n = nama.value.trim();
-    const p = pesan.value.trim();
-    if (!n || !p) return alert("Isi nama & pesan!");
-    const el = document.createElement("div");
-    el.innerHTML = `<b>${n}</b><br>${p}`;
+function kirimUcapan(){
+    const n=nama.value.trim();
+    const p=pesan.value.trim();
+    if(!n||!p)return alert("Isi nama & pesan!");
+    const el=document.createElement("div");
+    el.innerHTML=`<b>${n}</b><br>${p}`;
     messages.appendChild(el);
-    nama.value = ""; pesan.value = "";
+    nama.value=""; pesan.value="";
 }
 
+// DARK MODE
+function toggleDark(){document.body.classList.toggle("dark-mode");}
+
+// MUSIC TOGGLE
+function toggleMusic(){music.paused?music.play():music.pause();}
+
+// ORNAMENT DINAMIS VERTIKAL
+function addOrnament(src,x,y){
+    const img=document.createElement('img');
+    img.src=src; img.className='ornament';
+    img.style.left=x+'px'; img.style.top=y+'px';
+    document.querySelector('.ornaments').appendChild(img);
+}
+// contoh ornament di ujung kiri & kanan
+addOrnament('img/ornament1.png', 10, 100);
+addOrnament('img/ornament2.png', 10, 300);
+addOrnament('img/ornament3.png', window.innerWidth - 90, 150);
+addOrnament('img/ornament4.png', window.innerWidth - 90, 350);
+
 // QR CODE
-new QRCode(document.getElementById("qrcode"), {
+new QRCode(document.getElementById("qrcode"),{
     text: window.location.href,
-    width: 130, height: 130,
-    colorDark: "#50351c",
-    colorLight: "#f8f3ea"
+    width:130,height:130,
+    colorDark:"#50351c",
+    colorLight:"#f8f3ea"
 });
-
-// AOS
-AOS.init({ duration: 1000, once: true });
+};
 </script>
-
 </body>
 </html>
