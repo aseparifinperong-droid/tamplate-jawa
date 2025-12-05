@@ -141,7 +141,7 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 <div class="dark-toggle" onclick="toggleDark()">🌙</div>
 <div class="petals"></div>
 
-<!-- 🎵 MUSIK (dengan autoplay fix) -->
+<!-- 🎵 MUSIK -->
 <audio id="bgmusic" src="https://www.dropbox.com/scl/fi/eckjv0s31i47v9np7skda/Janji-Suci.mp3?rlkey=6nurwhsrzwov50grd5etv1bki&st=1kun7qvt&raw=1" loop></audio>
 
 <div class="ornaments"></div>
@@ -151,7 +151,9 @@ h1,h2,h3,p{transition: all 0.5s ease;}
   <h3 style="font-weight:300;font-size:20px;margin-bottom:10px;">Dengan hormat, kami mengundang Bapak/Ibu/Saudara/i</h3>
   <h1>Rani & Dimas</h1>
   <p style="margin-top:-10px;">12 Desember 2025</p>
-  <a href="#undangan" class="btn-buka">Buka Undangan</a>
+
+  <!-- FIX: Tambahkan ID -->
+  <a href="#undangan" class="btn-buka" id="openInvite">Buka Undangan</a>
 </section>
 
 <!-- UNDANGAN -->
@@ -209,7 +211,12 @@ h1,h2,h3,p{transition: all 0.5s ease;}
     <div class="section-bg" style="background-image:url('img/gallery3.jpg');"></div>
     <h2>Video Prewedding</h2>
     <div class="video">
-        <iframe src="video/prewweding.mp4" allow="autoplay" allowfullscreen></iframe>
+
+        <!-- FIX: autoplay + mute + bisa unmute saat klik -->
+        <video id="vidpre" autoplay muted playsinline controls>
+            <source src="video/prewweding.mp4" type="video/mp4">
+        </video>
+
     </div>
 </section>
 
@@ -254,9 +261,11 @@ window.onload = () => {
     const music = document.getElementById("bgmusic");
     const openBtn = document.getElementById("openInvite");
 
+    /* FIX: Musik play saat tombol ditekan */
     openBtn.addEventListener("click", () => {
-    music.play().catch(()=>{});
+        music.play().catch(()=>{});
     });
+
     // START AOS
     AOS.init({duration:1000,once:true});
 
@@ -321,10 +330,18 @@ window.onload = () => {
         colorLight:"#f8f3ea"
     });
 
+    /* FIX: Video autoplay muted → klik unmute */
+    const vid = document.getElementById("vidpre");
+    if (vid) {
+        vid.addEventListener("click", () => {
+            vid.muted = false;
+            vid.play();
+        });
+    }
+
     feather.replace();
 };
 </script>
 
 </body>
 </html>
-
