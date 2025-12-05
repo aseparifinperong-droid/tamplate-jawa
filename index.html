@@ -87,33 +87,82 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 .petal{position:absolute;width:25px;height:25px;background-image:url('img/kembang.png');background-size:cover;animation:fall linear infinite;}
 @keyframes fall{0%{transform:translateY(-10%) rotate(0deg);}100%{transform:translateY(120%) rotate(360deg);}}
 
-/* ---------- ORNAMENT BERPUTAR ---------- */
+/* ---------- ORNAMENT ---------- */
 .ornaments{position:absolute;top:0;left:0;width:80%;height:70%;pointer-events:none;z-index:0;}
 .ornament{position:absolute;transform-origin:50% 100%;animation:swing 7s ease-in-out infinite alternate;}
 @keyframes swing{0%{transform:rotate(-20deg);}50%{transform:rotate(20deg);}100%{transform:rotate(-20deg);}}
 
 /* ---------- COVER ---------- */
-#cover{background-size:cover; background-position:center;
-    display: flex !important;
-    flex-direction: column;
-    justify-content: flex-start !important;
-    align-items: center; /* biar tetap rata tengah horizontal */
-    height: 100vh; /* agar background fullscreen */
-    padding-top: 150px; /* geser turun */
+#cover{
+    background-size:cover;
+    background-position:center;
+    display:flex !important;
+    flex-direction:column;
+    justify-content:flex-start !important;
+    align-items:center;
+    height:100vh;
+    padding-top:150px;
 }
+
 /* ---------- BACKGROUND BLUR PER SECTION ---------- */
-/* (Tambahan sesuai permintaan, TIDAK mengubah yang lain) */
 .section-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    filter: blur(2px);
-    opacity: 0.40;
-    z-index: -2;
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    background-size:cover;
+    background-position:center;
+    filter:blur(2px);
+    opacity:0.40;
+    z-index:-2;
+}
+
+/* ============================================================
+   RESPONSIVE FIX (Mobile)
+   ============================================================ */
+@media (max-width: 480px) {
+
+    /* Ornament perkecil */
+    .ornament,
+    .ornaments img {
+        max-width: 110px !important;
+        height: auto !important;
+        transform: scale(0.4) !important;
+    }
+
+    /* Cover teks */
+    #cover h1 { font-size: 36px; }
+    #cover h3 { font-size: 16px; }
+    #cover p { font-size: 14px; }
+    #cover { padding-top: 120px !important; }
+
+    /* Card mempelai */
+    .card {
+        width: 85% !important;
+        padding: 15px;
+    }
+    .card img { border-width: 2px; }
+
+    /* Galeri */
+    .gallery-slider {
+        height: 250px !important;
+    }
+
+    /* Maps */
+    .maps iframe {
+        height: 260px !important;
+    }
+
+    /* Guestbook */
+    .guestbook input,
+    .guestbook textarea { width: 95% !important; }
+
+    /* Menu bottom */
+    .menu-item svg {
+        width:22px; height:22px;
+    }
+    .menu-bottom {
+        padding:5px 3px;
+    }
 }
 </style>
 </head>
@@ -261,21 +310,17 @@ window.onload = () => {
     const music = document.getElementById('bgmusic');
     music.play().catch(()=>console.log("Autoplay diblokir"));
 
-    // START AOS
     AOS.init({duration:1000,once:true});
 
-    // Background slider
     const coverImages=['img/bg-cover1.jpg','img/bg-cover2.jpg','img/bg-cover3.jpg'];
     let coverIndex=0;
     const coverSection=document.getElementById('cover');
     setInterval(()=>{coverIndex=(coverIndex+1)%coverImages.length;coverSection.style.backgroundImage=`url(${coverImages[coverIndex]})`;},5000);
 
-    // Galeri slider
     let slides=document.querySelectorAll('.gallery-slider .slide');
     let currentSlide=0;
     setInterval(()=>{slides[currentSlide].classList.remove('active');currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add('active');},4000);
 
-    // Petals
     function createPetal(){
         const p=document.createElement("div");
         p.classList.add("petal");
@@ -286,7 +331,6 @@ window.onload = () => {
     }
     setInterval(createPetal,500);
 
-    // UCAPAN
     function kirimUcapan(){
         const n=nama.value.trim();const p=pesan.value.trim();
         if(!n||!p)return alert("Isi nama & pesan!");
@@ -296,15 +340,12 @@ window.onload = () => {
     }
     window.kirimUcapan = kirimUcapan;
 
-    // DARK MODE
     function toggleDark(){document.body.classList.toggle("dark-mode");}
     window.toggleDark = toggleDark;
 
-    // ORNAMENT DINAMIS BERPUTAR DENGAN SCALE
     const ornamentsData = [
         {src:'img/ornament2.png', x:50, y:window.innerHeight - 20, scale:0.2},
         {src:'img/ornament2.png', x:window.innerWidth - 150, y:window.innerHeight - 100, scale:0.2},
-        
     ];
     function addOrnament({src, x, y, scale}) {
         const img = document.createElement('img');
@@ -318,7 +359,6 @@ window.onload = () => {
     }
     ornamentsData.forEach(addOrnament);
 
-    // QR CODE
     new QRCode(document.getElementById("qrcode"),{
         text: window.location.href,
         width:130,height:130,
@@ -326,10 +366,9 @@ window.onload = () => {
         colorLight:"#f8f3ea"
     });
 
-    // Feather icons
     feather.replace();
-    
 };
 </script>
+
 </body>
 </html>
