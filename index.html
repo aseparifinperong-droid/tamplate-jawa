@@ -88,35 +88,36 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 @keyframes fall{0%{transform:translateY(-10%) rotate(0deg);}100%{transform:translateY(120%) rotate(360deg);}}
 
 /* ---------- ORNAMENT ---------- */
-.ornaments{position:absolute;top:0;left:0;width:80%;height:70%;pointer-events:none;z-index:0;}
-.ornament{position:absolute;transform-origin:50% 100%;animation:swing 7s ease-in-out infinite alternate;}
-@keyframes swing{0%{transform:rotate(-20deg);}50%{transform:rotate(20deg);}100%{transform:rotate(-20deg);}}
-    
-/* FIX ORNAMENT AGAR TIDAK MELEBAR DI HP */
-.ornament {
-    max-width: 100%;
-    width: 100%;
+.ornaments {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
     height: auto;
-    display: block;
-    margin: 0 auto;
+    pointer-events: none;
+    z-index: 0;
 }
 
-/* Jika ornament ditempatkan sebagai background */
-.ornament-bg {
-    background-size: contain !important;  /* jangan cover */
-    background-repeat: no-repeat;
-    background-position: center;
+.ornament {
+    position: absolute;
+    transform-origin: 50% 100%;
+    animation: swing 7s ease-in-out infinite alternate;
+    width: 45vw;       /* responsive */
+    max-width: 250px;  /* batas agar tidak terlalu besar di HP */
+    height: auto;
 }
 
-/* Tambahan untuk menjaga layout HP */
+@keyframes swing {
+    0% { transform: rotate(-20deg); }
+    50% { transform: rotate(20deg); }
+    100% { transform: rotate(-20deg); }
+}
+
+/* MOBILE FIX */
 @media (max-width: 768px) {
     .ornament {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .ornament-bg {
-        background-size: contain !important;
+        width: 50vw;      /* diperkecil */
+        max-width: 180px; /* ukuran aman */
     }
 }
 /* ---------- COVER ---------- */
@@ -399,4 +400,5 @@ window.onload = () => {
 
 </body>
 </html>
+
 
