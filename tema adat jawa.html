@@ -93,8 +93,14 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 @keyframes swing{0%{transform:rotate(-20deg);}50%{transform:rotate(20deg);}100%{transform:rotate(-20deg);}}
 
 /* ---------- COVER ---------- */
-#cover{background-size:cover; background-position:center;}
-
+#cover{background-size:cover; background-position:center;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    align-items: center; /* biar tetap rata tengah horizontal */
+    height: 100vh; /* agar background fullscreen */
+    padding-top: 150px; /* geser turun */
+}
 /* ---------- BACKGROUND BLUR PER SECTION ---------- */
 /* (Tambahan sesuai permintaan, TIDAK mengubah yang lain) */
 .section-bg {
@@ -105,7 +111,7 @@ h1,h2,h3,p{transition: all 0.5s ease;}
     height: 100%;
     background-size: cover;
     background-position: center;
-    filter: blur(4px);
+    filter: blur(2px);
     opacity: 0.40;
     z-index: -2;
 }
@@ -138,36 +144,44 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 <div class="ornaments"></div>
 
 <!-- COVER -->
-<section id="cover" data-aos="fade-left" style="background-image:url('img/cover-bg2.jpg');">
-<h3 style="font-weight:300;font-size:20px;margin-bottom:10px;">Dengan hormat, kami mengundang Bapak/Ibu/Saudara/i</h3>
-<h1>Rani & Dimas</h1>
-<p style="margin-top:-10px;">Pernikahan Adat Jawa</p>
-<p>12 Desember 2025</p>
-<a href="#undangan" class="btn-buka">Buka Undangan</a>
+<section id="cover" data-aos="fade-up" 
+style="background-image:url('img/cover-bg2.jpg'); padding-top:120px;">
+
+  <h3 style="font-weight:300;font-size:20px;margin-bottom:10px;">
+    Dengan hormat, kami mengundang Bapak/Ibu/Saudara/i
+  </h3>
+
+  <h1>Rani & Dimas</h1>
+
+  <p style="margin-top:-10px;">12 Desember 2025</p>
+
+  <a href="#undangan" class="btn-buka">Buka Undangan</a>
 </section>
 
 <!-- UNDANGAN -->
 <section id="undangan" data-aos="fade-up">
-<h2>Assalamu’alaikum</h2>
-<p>Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu untuk hadir dalam pernikahan kami.</p>
-</section>
 
-<!-- MEMPELAI -->
-<section id="mempelai">
+    <h2>Assalamu’alaikum</h2>
+    <p>Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu untuk hadir dalam pernikahan kami.</p>
+
+    <h2 style="margin-top:40px;">Mempelai</h2>
+
     <div class="section-bg" style="background-image:url('img/bg1.jpg');"></div>
-    <h2>Mempelai</h2>
+
     <div class="mempelai">
         <div class="card" data-aos="fade-right">
             <img src="img/mempelai-wanita.jpg">
             <h3>Rani Putri</h3>
             <p>Putri dari Bpk. Ahmad & Ibu Siti</p>
         </div>
+
         <div class="card" data-aos="fade-left">
             <img src="img/mempelai-pria.jpg">
             <h3>Dimas Pratama</h3>
             <p>Putra dari Bpk. Budi & Ibu Lestari</p>
         </div>
     </div>
+
 </section>
 
 <!-- ACARA + LOKASI -->
