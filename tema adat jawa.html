@@ -75,10 +75,9 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 .gallery-slider .slide{position:absolute;top:50%;left:50%;width:100%;height:100%;object-fit:cover;transform:translate(-50%,-50%);opacity:0;}
 .gallery-slider .slide.active{opacity:1;}
 
-/* ---------- MAPS & VIDEO ---------- */
-.maps iframe,.video iframe{width:90%;border-radius:15px;border:3px solid #c9a063;}
-.maps iframe{height:350px;}
-.video iframe{height:300px;}
+/* ---------- MAPS & ACARA ---------- */
+#acara-lokasi .acara-detail{margin-bottom:20px;}
+.maps iframe{width:90%;height:350px;border-radius:15px;border:3px solid #c9a063;}
 
 /* ---------- GUESTBOOK ---------- */
 .guestbook input,.guestbook textarea{width:80%;padding:10px;margin:5px;border-radius:10px;border:1px solid #c9a063;}
@@ -90,10 +89,10 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 .petal{position:absolute;width:25px;height:25px;background-image:url('img/kembang.png');background-size:cover;animation:fall linear infinite;}
 @keyframes fall{0%{transform:translateY(-10%) rotate(0deg);}100%{transform:translateY(120%) rotate(360deg);}}
 
-/* ---------- ORNAMENT ---------- */
-.ornaments{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5;}
-.ornament{position:absolute;width:80px;opacity:.7;animation:waveY 3s ease-in-out infinite alternate;}
-@keyframes waveY{0% { transform: translateY(0); }50% { transform: translateY(20px); }100% { transform: translateY(0); }}
+/* ---------- ORNAMENT BERPUTAR ---------- */
+.ornaments{position:absolute;top:0;left:0;width:80%;height:70%;pointer-events:none;z-index:0;}
+.ornament{position:absolute;transform-origin:50% 100%;animation:swing 7s ease-in-out infinite alternate;}
+@keyframes swing{0%{transform:rotate(-20deg);}50%{transform:rotate(20deg);}100%{transform:rotate(-20deg);}}
 </style>
 </head>
 
@@ -108,14 +107,13 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 <!-- MENU & BUTTON -->
 <div class="menu-bottom">
     <a href="#cover" class="menu-item"><i data-feather="home"></i></a>
-    <a href="#undangan"><i data-feather="book-open"></i></a>
-    <a href="#mempelai"><i data-feather="users"></i></a>
-    <a href="#acara"><i data-feather="calendar"></i></a>
-    <a href="#lokasi"><i data-feather="map-pin"></i></a>
-    <a href="#galeri"><i data-feather="image"></i></a>
-    <a href="#video"><i data-feather="video"></i></a>
-    <a href="#hadiah"><i data-feather="gift"></i></a>
-    <a href="#ucapan"><i data-feather="message-circle"></i></a>
+    <a href="#undangan" class="menu-item"><i data-feather="book-open"></i></a>
+    <a href="#mempelai" class="menu-item"><i data-feather="users"></i></a>
+    <a href="#acara-lokasi" class="menu-item"><i data-feather="calendar"></i></a>
+    <a href="#galeri" class="menu-item"><i data-feather="image"></i></a>
+    <a href="#video" class="menu-item"><i data-feather="video"></i></a>
+    <a href="#hadiah" class="menu-item"><i data-feather="gift"></i></a>
+    <a href="#ucapan" class="menu-item"><i data-feather="message-circle"></i></a>
 </div>
 
 <div class="dark-toggle" onclick="toggleDark()">🌙</div>
@@ -156,18 +154,15 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 </div>
 </section>
 
-<!-- ACARA -->
-<section id="acara" data-aos="fade-up">
-<h2>Detail Acara</h2>
+<!-- ACARA + LOKASI -->
+<section id="acara-lokasi" data-aos="fade-up">
+<h2>Acara & Lokasi</h2>
+<div class="acara-detail">
 <h3>Akad Nikah</h3>
 <p>Sabtu, 12 Desember 2025 — 08.00 WIB</p>
 <h3>Resepsi</h3>
 <p>Sabtu, 12 Desember 2025 — 11.00–17.00 WIB</p>
-</section>
-
-<!-- LOKASI -->
-<section id="lokasi" data-aos="fade-up">
-<h2>Lokasi Acara</h2>
+</div>
 <div class="maps">
 <iframe src="https://www.google.com/maps/embed?pb=YOUR-MAPS" allowfullscreen></iframe>
 </div>
@@ -225,85 +220,78 @@ Hormat kami,<br>
 <script>feather.replace();</script>
 
 <script>
-// ---------- ON LOAD ----------
 window.onload = () => {
-setTimeout(()=>{
-    document.getElementById("loadingScreen").style.display="none";
-},1500);
+    setTimeout(()=>{document.getElementById("loadingScreen").style.display="none";},1500);
 
-// MUSIK AUTOPLAY
-const music = document.getElementById('bgmusic');
-music.play().catch(()=>console.log("Autoplay diblokir"));
+    // MUSIK AUTOPLAY
+    const music = document.getElementById('bgmusic');
+    music.play().catch(()=>console.log("Autoplay diblokir"));
 
-// START AOS
-AOS.init({duration:1000,once:true});
+    // START AOS
+    AOS.init({duration:1000,once:true});
 
-// Background slider
-const coverImages=['img/bg-cover1.jpg','img/bg-cover2.jpg','img/bg-cover3.jpg'];
-let coverIndex=0;
-const coverSection=document.getElementById('cover');
-setInterval(()=>{
-    coverIndex=(coverIndex+1)%coverImages.length;
-    coverSection.style.backgroundImage=`url(${coverImages[coverIndex]})`;
-},5000);
+    // Background slider
+    const coverImages=['img/bg-cover1.jpg','img/bg-cover2.jpg','img/bg-cover3.jpg'];
+    let coverIndex=0;
+    const coverSection=document.getElementById('cover');
+    setInterval(()=>{coverIndex=(coverIndex+1)%coverImages.length;coverSection.style.backgroundImage=`url(${coverImages[coverIndex]})`;},5000);
 
-// Galeri slider
-let slides=document.querySelectorAll('.gallery-slider .slide');
-let currentSlide=0;
-setInterval(()=>{
-    slides[currentSlide].classList.remove('active');
-    currentSlide=(currentSlide+1)%slides.length;
-    slides[currentSlide].classList.add('active');
-},4000);
+    // Galeri slider
+    let slides=document.querySelectorAll('.gallery-slider .slide');
+    let currentSlide=0;
+    setInterval(()=>{slides[currentSlide].classList.remove('active');currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add('active');},4000);
 
-// Petals
-function createPetal(){
-    const p=document.createElement("div");
-    p.classList.add("petal");
-    p.style.left=Math.random()*100+'vw';
-    p.style.animationDuration=(Math.random()*4+4)+'s';
-    document.querySelector(".petals").appendChild(p);
-    setTimeout(()=>p.remove(),8000);
-}
-setInterval(createPetal,500);
+    // Petals
+    function createPetal(){const p=document.createElement("div");p.classList.add("petal");p.style.left=Math.random()*100+'vw';p.style.animationDuration=(Math.random()*4+4)+'s';document.querySelector(".petals").appendChild(p);setTimeout(()=>p.remove(),8000);}
+    setInterval(createPetal,500);
 
-// UCAPAN
-function kirimUcapan(){
-    const n=nama.value.trim();
-    const p=pesan.value.trim();
-    if(!n||!p)return alert("Isi nama & pesan!");
-    const el=document.createElement("div");
-    el.innerHTML=`<b>${n}</b><br>${p}`;
-    messages.appendChild(el);
-    nama.value=""; pesan.value="";
-}
+    // UCAPAN
+    function kirimUcapan(){
+        const n=nama.value.trim();const p=pesan.value.trim();
+        if(!n||!p)return alert("Isi nama & pesan!");
+        const el=document.createElement("div");el.innerHTML=`<b>${n}</b><br>${p}`;
+        messages.appendChild(el);nama.value=""; pesan.value="";
+    }
+    window.kirimUcapan = kirimUcapan;
 
-// DARK MODE
-function toggleDark(){document.body.classList.toggle("dark-mode");}
+    // DARK MODE
+    function toggleDark(){document.body.classList.toggle("dark-mode");}
+    window.toggleDark = toggleDark;
 
-// MUSIC TOGGLE
-function toggleMusic(){music.paused?music.play():music.pause();}
+    // MUSIC TOGGLE
+    function toggleMusic(){music.paused?music.play():music.pause();}
+    window.toggleMusic = toggleMusic;
 
-// ORNAMENT DINAMIS VERTIKAL
-function addOrnament(src,x,y){
-    const img=document.createElement('img');
-    img.src=src; img.className='ornament';
-    img.style.left=x+'px'; img.style.top=y+'px';
+    // ORNAMENT DINAMIS BERPUTAR DENGAN SCALE
+    // ---------- ORNAMENT DINAMIS ----------
+const ornamentsData = [
+    {src:'img/ornament1.png', x:50, y:window.innerHeight - 120, scale:0.2},
+    {src:'img/ornament2.png', x:window.innerWidth - 150, y:window.innerHeight - 100, scale:0.2},
+    {src:'img/ornament3.png', x:100, y:100, scale:0.4},
+    {src:'img/ornament4.png', x:window.innerWidth - 120, y:150, scale:0.3}
+];
+
+function addOrnament({src, x, y, scale}) {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'ornament';
+    img.style.left = x + 'px';
+    img.style.top = y + 'px';
+    img.style.transform = `scale(${scale})`;
+    img.style.background = 'none';
     document.querySelector('.ornaments').appendChild(img);
 }
-// contoh ornament di ujung kiri & kanan
-addOrnament('img/ornament1.png', 10, 100);
-addOrnament('img/ornament2.png', 10, 300);
-addOrnament('img/ornament3.png', window.innerWidth - 90, 150);
-addOrnament('img/ornament4.png', window.innerWidth - 90, 350);
 
-// QR CODE
-new QRCode(document.getElementById("qrcode"),{
-    text: window.location.href,
-    width:130,height:130,
-    colorDark:"#50351c",
-    colorLight:"#f8f3ea"
-});
+// Menambahkan semua ornament
+ornamentsData.forEach(addOrnament);
+
+    // QR CODE
+    new QRCode(document.getElementById("qrcode"),{
+        text: window.location.href,
+        width:130,height:130,
+        colorDark:"#50351c",
+        colorLight:"#f8f3ea"
+    });
 };
 </script>
 </body>
