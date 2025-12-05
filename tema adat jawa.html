@@ -29,11 +29,9 @@ section::before{
 h1,h2,h3,p{transition: all 0.5s ease;}
 .card, .btn-buka, .guestbook input, .guestbook textarea{transition: all 0.5s ease;}
 .gallery-slider .slide{transition: opacity 1s ease-in-out;}
+
 /* ---------- DARK MODE ---------- */
-.dark-mode {
-    background:#1a120b !important;
-    color:#e8d6b8 !important;
-}
+.dark-mode { background:#1a120b !important; color:#e8d6b8 !important; }
 .dark-mode h1,h2,h3,p{color:#e8d6b8 !important;}
 .dark-mode section::before{background:rgba(0,0,0,0.6);}
 .dark-mode .card{background:#3b2715;border-color:#e2c083;color:#e8d6b8;}
@@ -42,6 +40,7 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 .dark-mode .guestbook button{background:#e2c083;color:#1a120b;}
 .dark-mode .menu-bottom{background:rgba(26,18,11,0.95);}
 .dark-mode .petals{opacity:0.7;}
+
 /* ---------- LOADING ---------- */
 #loadingScreen{
     position:fixed; top:0; left:0; width:100%; height:100%; background:#3b2715;
@@ -56,12 +55,11 @@ h1,h2,h3,p{transition: all 0.5s ease;}
     backdrop-filter:blur(8px); padding:8px 5px; display:flex; justify-content:space-around; z-index:9999;
     border-top:2px solid #c9a063; transition: all 0.5s ease;
 }
-.menu-item i{width:26px;height:26px;color:#f7e7ce;}
-.menu-item:hover i{color:#e5c37a;}
+.menu-item svg { width:26px; height:26px; stroke:#ffffff; }
+.menu-item:hover svg {stroke:#cccccc;}
 
 /* ---------- BUTTONS ---------- */
 .dark-toggle{position:fixed; bottom:120px; right:20px; width:55px;height:55px; background:#50351c; border-radius:50%; color:#f7e7ce; display:flex;align-items:center;justify-content:center; cursor:pointer; z-index:9999;font-size:22px;}
-.music-btn{position:fixed;left:20px;bottom:120px;background:#50351c;width:55px;height:55px;border-radius:50%;color:#f7e7ce;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;font-size:22px;}
 .btn-buka{margin-top:25px;padding:14px 28px;background:#f7e7ce;color:#50351c;border-radius:30px;border:2px solid #c9a063;font-weight:bold;text-decoration:none;transition:all 0.3s;}
 .btn-buka:hover{background:#c9a063;color:#fff;}
 
@@ -93,6 +91,24 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 .ornaments{position:absolute;top:0;left:0;width:80%;height:70%;pointer-events:none;z-index:0;}
 .ornament{position:absolute;transform-origin:50% 100%;animation:swing 7s ease-in-out infinite alternate;}
 @keyframes swing{0%{transform:rotate(-20deg);}50%{transform:rotate(20deg);}100%{transform:rotate(-20deg);}}
+
+/* ---------- COVER ---------- */
+#cover{background-size:cover; background-position:center;}
+
+/* ---------- BACKGROUND BLUR PER SECTION ---------- */
+/* (Tambahan sesuai permintaan, TIDAK mengubah yang lain) */
+.section-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(4px);
+    opacity: 0.40;
+    z-index: -2;
+}
 </style>
 </head>
 
@@ -100,11 +116,11 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 
 <!-- LOADING SCREEN -->
 <div id="loadingScreen">
-    <img class="loading-logo" src="img/astagina.png">
+    <img class="loading-logo" src="img/ormanent-mid.png">
     <p>Matur Nuwun, sekedap nggih...</p>
 </div>
 
-<!-- MENU & BUTTON -->
+<!-- MENU BOTTOM -->
 <div class="menu-bottom">
     <a href="#cover" class="menu-item"><i data-feather="home"></i></a>
     <a href="#undangan" class="menu-item"><i data-feather="book-open"></i></a>
@@ -117,13 +133,12 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 </div>
 
 <div class="dark-toggle" onclick="toggleDark()">🌙</div>
-<div class="music-btn" onclick="toggleMusic()">🎶</div>
 <div class="petals"></div>
-<audio id="bgmusic" src="music/gending.mp3" autoplay loop></audio>
+<audio id="bgmusic" src="music/backsound.mp3" autoplay loop></audio>
 <div class="ornaments"></div>
 
 <!-- COVER -->
-<section id="cover" data-aos="zoom-in" style="background-image:url('img/bg-cover1.jpg'); background-size:cover; background-position:center;">
+<section id="cover" data-aos="fade-left" style="background-image:url('img/cover-bg2.jpg');">
 <h3 style="font-weight:300;font-size:20px;margin-bottom:10px;">Dengan hormat, kami mengundang Bapak/Ibu/Saudara/i</h3>
 <h1>Rani & Dimas</h1>
 <p style="margin-top:-10px;">Pernikahan Adat Jawa</p>
@@ -139,69 +154,76 @@ h1,h2,h3,p{transition: all 0.5s ease;}
 
 <!-- MEMPELAI -->
 <section id="mempelai">
-<h2>Mempelai</h2>
-<div class="mempelai">
-    <div class="card" data-aos="fade-right">
-        <img src="img/mempelai-wanita.jpg">
-        <h3>Rani Putri</h3>
-        <p>Putri dari Bpk. Ahmad & Ibu Siti</p>
+    <div class="section-bg" style="background-image:url('img/bg1.jpg');"></div>
+    <h2>Mempelai</h2>
+    <div class="mempelai">
+        <div class="card" data-aos="fade-right">
+            <img src="img/mempelai-wanita.jpg">
+            <h3>Rani Putri</h3>
+            <p>Putri dari Bpk. Ahmad & Ibu Siti</p>
+        </div>
+        <div class="card" data-aos="fade-left">
+            <img src="img/mempelai-pria.jpg">
+            <h3>Dimas Pratama</h3>
+            <p>Putra dari Bpk. Budi & Ibu Lestari</p>
+        </div>
     </div>
-    <div class="card" data-aos="fade-left">
-        <img src="img/mempelai-pria.jpg">
-        <h3>Dimas Pratama</h3>
-        <p>Putra dari Bpk. Budi & Ibu Lestari</p>
-    </div>
-</div>
 </section>
 
 <!-- ACARA + LOKASI -->
 <section id="acara-lokasi" data-aos="fade-up">
-<h2>Acara & Lokasi</h2>
-<div class="acara-detail">
-<h3>Akad Nikah</h3>
-<p>Sabtu, 12 Desember 2025 — 08.00 WIB</p>
-<h3>Resepsi</h3>
-<p>Sabtu, 12 Desember 2025 — 11.00–17.00 WIB</p>
-</div>
-<div class="maps">
-<iframe src="https://www.google.com/maps/embed?pb=YOUR-MAPS" allowfullscreen></iframe>
-</div>
+    <div class="section-bg" style="background-image:url('img/gallery1.jpg');"></div>
+    <h2>Acara & Lokasi</h2>
+    <div class="acara-detail">
+        <h3>Akad Nikah</h3>
+        <p>Sabtu, 12 Desember 2025 — 08.00 WIB</p>
+        <h3>Resepsi</h3>
+        <p>Sabtu, 12 Desember 2025 — 11.00–17.00 WIB</p>
+    </div>
+    <div class="maps">
+        <iframe src="https://www.google.com/maps/embed?pb=YOUR-MAPS" allowfullscreen></iframe>
+    </div>
 </section>
 
 <!-- GALERI -->
 <section id="galeri" data-aos="fade-up">
-<h2>Galeri Prewedding</h2>
-<div class="gallery-slider">
-    <img src="img/prewed1.jpg" class="slide active">
-    <img src="img/prewed2.jpg" class="slide">
-    <img src="img/prewed3.jpg" class="slide">
-</div>
+    <div class="section-bg" style="background-image:url('img/gallery2.jpg');"></div>
+    <h2>Galeri Prewedding</h2>
+    <div class="gallery-slider">
+        <img src="img/gallery1.jpg" class="slide active">
+        <img src="img/gallery2.jpg" class="slide">
+        <img src="img/gallery3.jpg" class="slide">
+        <img src="img/gallery4.jpg" class="slide">
+    </div>
 </section>
 
 <!-- VIDEO -->
 <section id="video" data-aos="fade-up">
-<h2>Video Prewedding</h2>
-<div class="video">
-<iframe src="https://www.youtube.com/embed/YOURVIDEO?autoplay=1&mute=1" allow="autoplay" allowfullscreen></iframe>
-</div>
+    <div class="section-bg" style="background-image:url('img/gallery3.jpg');"></div>
+    <h2>Video Prewedding</h2>
+    <div class="video">
+        <iframe src="video/prewweding.mp4" allow="autoplay" allowfullscreen></iframe>
+    </div>
 </section>
 
 <!-- HADIAH -->
 <section id="hadiah" data-aos="fade-up">
-<h2>Kirim Hadiah</h2>
-<p>BCA — 1234567890 a/n Rani Putri</p>
-<div id="qrcode"></div>
+    <div class="section-bg" style="background-image:url('img/gallery2.jpg');"></div>
+    <h2>Kirim Hadiah</h2>
+    <p>BCA — 1234567890 a/n Rani Putri</p>
+    <div id="qrcode"></div>
 </section>
 
 <!-- UCAPAN -->
 <section id="ucapan" data-aos="fade-up">
-<h2>Ucapan & Doa</h2>
-<div class="guestbook">
-<input id="nama" placeholder="Nama Anda">
-<textarea id="pesan" rows="3" placeholder="Tulis ucapan..."></textarea>
-<button onclick="kirimUcapan()">Kirim</button>
-</div>
-<div id="messages" class="messages"></div>
+    <div class="section-bg" style="background-image:url('img/gallery1.jpg');"></div>
+    <h2>Ucapan & Doa</h2>
+    <div class="guestbook">
+        <input id="nama" placeholder="Nama Anda">
+        <textarea id="pesan" rows="3" placeholder="Tulis ucapan..."></textarea>
+        <button onclick="kirimUcapan()">Kirim</button>
+    </div>
+    <div id="messages" class="messages"></div>
 </section>
 
 <!-- PENUTUP -->
@@ -217,13 +239,11 @@ Hormat kami,<br>
 
 <script src="https://unpkg.com/feather-icons"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>feather.replace();</script>
 
 <script>
 window.onload = () => {
     setTimeout(()=>{document.getElementById("loadingScreen").style.display="none";},1500);
 
-    // MUSIK AUTOPLAY
     const music = document.getElementById('bgmusic');
     music.play().catch(()=>console.log("Autoplay diblokir"));
 
@@ -242,14 +262,22 @@ window.onload = () => {
     setInterval(()=>{slides[currentSlide].classList.remove('active');currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add('active');},4000);
 
     // Petals
-    function createPetal(){const p=document.createElement("div");p.classList.add("petal");p.style.left=Math.random()*100+'vw';p.style.animationDuration=(Math.random()*4+4)+'s';document.querySelector(".petals").appendChild(p);setTimeout(()=>p.remove(),8000);}
+    function createPetal(){
+        const p=document.createElement("div");
+        p.classList.add("petal");
+        p.style.left=Math.random()*100+'vw';
+        p.style.animationDuration=(Math.random()*4+4)+'s';
+        document.querySelector(".petals").appendChild(p);
+        setTimeout(()=>p.remove(),8000);
+    }
     setInterval(createPetal,500);
 
     // UCAPAN
     function kirimUcapan(){
         const n=nama.value.trim();const p=pesan.value.trim();
         if(!n||!p)return alert("Isi nama & pesan!");
-        const el=document.createElement("div");el.innerHTML=`<b>${n}</b><br>${p}`;
+        const el=document.createElement("div");
+        el.innerHTML=`<b>${n}</b><br>${p}`;
         messages.appendChild(el);nama.value=""; pesan.value="";
     }
     window.kirimUcapan = kirimUcapan;
@@ -258,32 +286,23 @@ window.onload = () => {
     function toggleDark(){document.body.classList.toggle("dark-mode");}
     window.toggleDark = toggleDark;
 
-    // MUSIC TOGGLE
-    function toggleMusic(){music.paused?music.play():music.pause();}
-    window.toggleMusic = toggleMusic;
-
     // ORNAMENT DINAMIS BERPUTAR DENGAN SCALE
-    // ---------- ORNAMENT DINAMIS ----------
-const ornamentsData = [
-    {src:'img/ornament1.png', x:50, y:window.innerHeight - 120, scale:0.2},
-    {src:'img/ornament2.png', x:window.innerWidth - 150, y:window.innerHeight - 100, scale:0.2},
-    {src:'img/ornament3.png', x:100, y:100, scale:0.4},
-    {src:'img/ornament4.png', x:window.innerWidth - 120, y:150, scale:0.3}
-];
-
-function addOrnament({src, x, y, scale}) {
-    const img = document.createElement('img');
-    img.src = src;
-    img.className = 'ornament';
-    img.style.left = x + 'px';
-    img.style.top = y + 'px';
-    img.style.transform = `scale(${scale})`;
-    img.style.background = 'none';
-    document.querySelector('.ornaments').appendChild(img);
-}
-
-// Menambahkan semua ornament
-ornamentsData.forEach(addOrnament);
+    const ornamentsData = [
+        {src:'img/ornament2.png', x:50, y:window.innerHeight - 20, scale:0.2},
+        {src:'img/ornament2.png', x:window.innerWidth - 150, y:window.innerHeight - 100, scale:0.2},
+        
+    ];
+    function addOrnament({src, x, y, scale}) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'ornament';
+        img.style.left = x + 'px';
+        img.style.top = y + 'px';
+        img.style.transform = `scale(${scale})`;
+        img.style.background = 'none';
+        document.querySelector('.ornaments').appendChild(img);
+    }
+    ornamentsData.forEach(addOrnament);
 
     // QR CODE
     new QRCode(document.getElementById("qrcode"),{
@@ -292,6 +311,10 @@ ornamentsData.forEach(addOrnament);
         colorDark:"#50351c",
         colorLight:"#f8f3ea"
     });
+
+    // Feather icons
+    feather.replace();
+    
 };
 </script>
 </body>
